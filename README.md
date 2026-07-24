@@ -113,3 +113,39 @@ Generated images are also saved to `generated/` (gitignored) for reference.
   gets much closer results.
 - No auth, no history/gallery, no multiple sizes or color printing — see
   `PLAN.md` for intentional MVP scope.
+
+## If I had more time, I'd want to...
+
+**Make it friendlier for kids day-to-day**
+- Add a difficulty/complexity control (toddler vs. big-kid) so the artwork's fill
+  areas scale to the child's age instead of one fixed style for everyone.
+- Show a live waveform or "listening" animation while recording, instead of static
+  status text — makes the mic actually feel like it's paying attention.
+- Let a kid see the transcribed text for a beat before it prints, in case the mic
+  mishears — right now a bad transcription just prints anyway.
+
+**Reduce the friction of running it**
+- Swap the ad-hoc self-signed cert for a locally-trusted one (e.g. via `mkcert`),
+  so the phone doesn't need to click through a certificate warning every single
+  time the server restarts.
+- Turn the page into an installable PWA with a home-screen icon, so it's a normal
+  app tap instead of typing an HTTPS LAN address from memory.
+- Auto-detect the printer's actual media size/DPI from the PPD instead of hardcoding
+  `w288h432` in `printer.py`, so it isn't tied to this one specific label roll.
+
+**Round out reliability**
+- Poll the actual CUPS job status after printing instead of trusting `lp`'s exit
+  code — right now a jam or empty label roll wouldn't necessarily surface as an
+  error in the UI.
+- A tiny in-memory gallery of the last few generated stickers, so a mis-tap on
+  Regenerate doesn't lose the previous result before it's been printed.
+- Basic automated tests around the image post-processing (threshold/margin math in
+  `printer.py`) and the prompt template — currently everything was verified by
+  hand against real hardware, which was the right call for a fast build, but
+  wouldn't scale if the project grew.
+
+**Fun stretch ideas**
+- Multi-language voice support (Gemini can already transcribe non-English audio) —
+  nice for bilingual households.
+- A small running counter of labels used, since a roll is a finite, physical
+  resource a parent might want to keep an eye on.
